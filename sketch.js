@@ -46,12 +46,13 @@ function draw() {
   drawSnake();
   drawApple();
 
-  if (state === Collision.Kill) {
-    endGame();
-  } else if (state === Collision.None) {
+  if (state === Collision.None) {
     updateStatus(`Score: ${gameScore}`);
+  } else if (state === Collision.Kill) {
+    endGame();
   } else if (state === Collision.Apple) {
     gameScore += 1;
+    moveApple();
   }
 
 }

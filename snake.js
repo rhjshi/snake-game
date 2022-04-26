@@ -29,3 +29,10 @@ function drawSnake() {
   }
   strokeWeight(1)
 }
+
+function isOnSnake(x, y) {
+  for (let i = 0; i < Snake.length; ++i) {
+    if (Snake[i].x === x && Snake[i].y === y) return true;
+  }
+  return false;
+}
