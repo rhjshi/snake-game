@@ -24,6 +24,8 @@ function updateSnake() {
     Snake.pop();
   }
 
+  if ( isOnSnake(Snake[0].x, Snake[0].y, true) ) return Collision.Kill;
+
   return state;
 }
 

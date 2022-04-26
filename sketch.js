@@ -77,8 +77,7 @@ function checkCollision() {
 
   if (
     x < 0 || x >= BoardWidth ||
-    y < 0 || y >= BoardHeight ||
-    isOnSnake(x, y, true)
+    y < 0 || y >= BoardHeight
   ) {
     return Collision.Kill;
   }
