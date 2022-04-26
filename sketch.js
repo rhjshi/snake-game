@@ -15,12 +15,8 @@
 */
 
 let direction = "d";
-
 let snakeFrameCounter = SnakeFPS; 
-
 let gameScore = 0;
-
-
 
 /*
   Built-ins
@@ -58,7 +54,6 @@ function draw() {
 }
 
 /*
-
 */
 
 function updateStatus(s) {
@@ -73,18 +68,20 @@ function endGame() {
 
 
 function checkCollision() {
-  if (Snake[0].x === Apple.x && Snake[0].y === Apple.y) {
+  const x = Snake[0].x;
+  const y = Snake[0].y;
+
+  if (x === Apple.x && y === Apple.y) {
     return Collision.Apple;
   }
 
   if (
-    Snake[0].x < 0 || Snake[0].x >= BoardWidth ||
-    Snake[0].y < 0 || Snake[0].y >= BoardHeight
+    x < 0 || x >= BoardWidth ||
+    y < 0 || y >= BoardHeight ||
+    isOnSnake(x, y, true)
   ) {
     return Collision.Kill;
   }
-  
-
   
   return Collision.None;
 }
