@@ -17,7 +17,7 @@ const DirectionMap = new Map([
 const FPS = 30;
 
 /* 
-  want 5 blocks/sec 
+  want 6 blocks/sec 
   1 block / <SnakeFPS> frames * <FPS> frames/sec 
 */
 const SnakeFPS = FPS / 6; 

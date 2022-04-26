@@ -1,4 +1,6 @@
 /*
+  https://p5js.org/get-started/
+
   StartTime: 12:55am
   
   Day 1
@@ -39,27 +41,29 @@ function setup() {
 function draw() {
   drawBackground();
   
-  updateSnake();
-
-  const state = checkCollision();
+  const state = updateSnake();
   
   drawSnake();
-  
+  drawApple();
+
   if (state === Collision.Kill) {
     endGame();
   } else if (state === Collision.None) {
     updateStatus(`Score: ${gameScore}`);
+  } else if (state === Collision.Apple) {
+    gameScore += 1;
   }
 
 }
+
+/*
+
+*/
 
 function updateStatus(s) {
   fill(238,238,210)
   text(s, 20, BlockWidth*BoardHeight + 30)
 }
-/*
-
-*/
 
 function endGame() {
   noLoop();
@@ -68,6 +72,10 @@ function endGame() {
 
 
 function checkCollision() {
+  if (Snake[0].x === Apple.x && Snake[0].y === Apple.y) {
+    return Collision.Apple;
+  }
+
   if (
     Snake[0].x < 0 || Snake[0].x >= BoardWidth ||
     Snake[0].y < 0 || Snake[0].y >= BoardHeight
@@ -75,11 +83,10 @@ function checkCollision() {
     return Collision.Kill;
   }
   
+
   
   return Collision.None;
 }
-
-
 
 const directionBuffer = [];
 function keyPressed() {
@@ -87,36 +94,6 @@ function keyPressed() {
   
   if (KeyMappings.get(keyCode))
     directionBuffer.push(KeyMappings.get(keyCode));
-}
-
-function updateSnake() {
-  snakeFrameCounter = (snakeFrameCounter+1) % SnakeFPS;
-  if (snakeFrameCounter !== 0) return;
-  
-  if (directionBuffer.length > 0) {
-    const want = directionBuffer.shift();
-      if (direction !== OppositeDirection.get(want)) 
-        direction = want;
-  }
-  
-  Snake.pop();
-  const newHead = createVector(Snake[0].x, Snake[0].y);
-
-  const v = DirectionMap.get(direction);
-  newHead.add(v);
-  
-  Snake.unshift(newHead);
-}
-
-function drawSnake() {
-  stroke(118,150,86)
-  strokeWeight(BlockWidth*3/4)
-  for (let i = 0; i < Snake.length-1; ++i) {
-    const ends = [Snake[i].x, Snake[i].y, Snake[i+1].x, Snake[i+1].y];
-    
-    line(...ends.map(v => Offset(v)))
-  }
-  strokeWeight(1)
 }
 
 /*
